@@ -24,8 +24,8 @@ class MainPageState extends State<MainPage> {
     context.read<ButtonBloc>().add(
           CheckButtonActive(
             controllers: [
-              controller1,
-              controller2,
+              controller1.text,
+              controller2.text,
             ],
           ),
         );

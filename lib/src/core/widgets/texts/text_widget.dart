@@ -8,7 +8,7 @@ class TextWidget extends StatelessWidget {
     super.key,
     required this.fontSize,
     this.fontFamily = Fonts.medium,
-    this.color = Colors.white,
+    this.color = Colors.black,
     this.textAlign,
     this.maxLines,
   });

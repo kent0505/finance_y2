@@ -6,5 +6,5 @@ sealed class ButtonEvent {}
 class CheckButtonActive extends ButtonEvent {
   CheckButtonActive({required this.controllers});
 
-  final List<TextEditingController> controllers;
+  final List<String> controllers;
 }

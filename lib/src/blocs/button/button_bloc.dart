@@ -17,9 +17,7 @@ class ButtonBloc extends Bloc<ButtonEvent, ButtonState> {
     CheckButtonActive event,
     Emitter<ButtonState> emit,
   ) {
-    final isEmpty = event.controllers.any(
-      (controller) => controller.text.isEmpty,
-    );
+    final isEmpty = event.controllers.any((controller) => controller.isEmpty);
     emit(isEmpty ? ButtonInactive() : ButtonInitial());
   }
 }
