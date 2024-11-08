@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/db/prefs.dart';
 import '../../core/config/app_colors.dart';
+import '../../core/utils.dart';
 import '../../core/widgets/buttons/primary_button.dart';
 import '../../core/widgets/custom_scaffold.dart';
 import '../../core/widgets/texts/text_widget.dart';
@@ -48,6 +49,7 @@ class _OnboardPageState extends State<OnboardPage> {
     return CustomScaffold(
       body: Column(
         children: [
+          SizedBox(height: getStatusBar(context)),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 44),
@@ -60,6 +62,7 @@ class _OnboardPageState extends State<OnboardPage> {
               textAlign: TextAlign.center,
             ),
           ),
+          const Spacer(),
           ColorFiltered(
             colorFilter: const ColorFilter.mode(
               AppColors.main,
@@ -72,6 +75,7 @@ class _OnboardPageState extends State<OnboardPage> {
               fit: BoxFit.cover,
             ),
           ),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: PrimaryButton(
@@ -93,6 +97,7 @@ class _OnboardPageState extends State<OnboardPage> {
               ),
             ),
           ),
+          const Spacer(),
         ],
       ),
     );
