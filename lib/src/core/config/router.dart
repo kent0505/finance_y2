@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 
 import '../../features/home/pages/home_page.dart';
+import '../../features/money/pages/history_page.dart';
 import '../../features/money/pages/money_page.dart';
 import '../../features/splash/onboard_page.dart';
 import '../../features/splash/splash_page.dart';
@@ -26,6 +27,10 @@ final routerConfig = GoRouter(
       builder: (context, state) => MoneyPage(
         extra: state.extra as ExtraModel,
       ),
+    ),
+    GoRoute(
+      path: '/history',
+      builder: (context, state) => const HistoryPage(),
     ),
   ],
 );

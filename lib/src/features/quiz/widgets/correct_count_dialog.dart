@@ -38,7 +38,7 @@ class CorrectCountDialog extends StatelessWidget {
                   TextWidget(
                     'OK',
                     fontSize: 14,
-                    fontFamily: Fonts.medium,
+                    fontFamily: Fonts.unb700,
                   ),
                 ],
               ),

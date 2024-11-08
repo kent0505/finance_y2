@@ -3,6 +3,9 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'db/db.dart';
+import 'models/money.dart';
+
 int getCurrentTimestamp() {
   return DateTime.now().millisecondsSinceEpoch ~/ 1000;
 }
@@ -101,4 +104,103 @@ String getCatSvg(String cat) {
   if (cat == 'Dividends') return 'assets/cat11.svg';
   if (cat == 'Royalty') return 'assets/cat12.svg';
   return 'assets/cat1.svg';
+}
+
+int totalIncomes = 0;
+int totalExpenses = 0;
+
+void calculateMoney() {
+  totalIncomes = 0;
+  totalExpenses = 0;
+  for (Money money in moneyList) {
+    if (money.income) {
+      totalIncomes += money.amount;
+    } else {
+      totalExpenses += money.amount;
+    }
+  }
+}
+
+String getPreviousMonthName() {
+  DateTime now = DateTime.now();
+  DateTime previousMonth = DateTime(now.year, now.month - 1);
+  return DateFormat('MMMM').format(previousMonth);
+}
+
+// double comparePreviousMonthIncomes() {
+//   List<Money> currentMonthList = [];
+//   List<Money> lastMonthList = [];
+//   DateTime now = DateTime.now();
+//   int incomes1 = 0;
+//   int expenses1 = 0;
+//   int incomes2 = 0;
+//   int expenses2 = 0;
+
+//   for (Money money in moneyList) {
+//     DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
+//     if (date.month == now.month) currentMonthList.add(money);
+//     if (date.month - 1 == now.month - 1) lastMonthList.add(money);
+//   }
+
+//   for (Money money in currentMonthList) {
+//     if (money.income) {
+//       incomes1 += money.amount;
+//     } else {
+//       expenses1 += money.amount;
+//     }
+//   }
+
+//   for (Money money in lastMonthList) {
+//     if (money.income) {
+//       incomes2 += money.amount;
+//     } else {
+//       expenses2 += money.amount;
+//     }
+//   }
+
+//   if (incomes2 - expenses2 == 0) {
+//     return 0;
+//   } else {
+//     return (incomes1 - expenses1 / incomes2 - expenses2) * 100;
+//   }
+// }
+
+String comparePreviousMonthIncomes() {
+  List<Money> currentMonthList = [];
+  List<Money> lastMonthList = [];
+  DateTime now = DateTime.now();
+  int incomes1 = 0;
+  int expenses1 = 0;
+  int incomes2 = 0;
+  int expenses2 = 0;
+
+  for (Money money in moneyList) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
+    if (date.month == now.month && date.year == now.year) {
+      currentMonthList.add(money);
+    }
+    DateTime previousMonth = DateTime(now.year, now.month - 1);
+    if (date.month == previousMonth.month && date.year == previousMonth.year) {
+      lastMonthList.add(money);
+    }
+  }
+  for (Money money in currentMonthList) {
+    if (money.income) {
+      incomes1 += money.amount;
+    } else {
+      expenses1 += money.amount;
+    }
+  }
+  for (Money money in lastMonthList) {
+    if (money.income) {
+      incomes2 += money.amount;
+    } else {
+      expenses2 += money.amount;
+    }
+  }
+  int netIncome1 = incomes1 - expenses1;
+  int netIncome2 = incomes2 - expenses2;
+  if (netIncome2 == 0) return '0%';
+  final total = ((netIncome1 - netIncome2) / netIncome2) * 100;
+  return '${total.toStringAsFixed(2)}%';
 }

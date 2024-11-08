@@ -23,39 +23,43 @@ class MoneyBloc extends Bloc<MoneyEvent, MoneyState> {
     GetMoneyEvent event,
     Emitter<MoneyState> emit,
   ) async {
+    emit(MoneyLoading());
     await getMoney();
-    emit(MoneyLoadedState(money: modelsList));
+    emit(MoneyLoaded(money: moneyList));
   }
 
   void _addMoney(
     AddMoneyEvent event,
     Emitter<MoneyState> emit,
   ) async {
-    modelsList.insert(0, event.money);
-    // modelsList.add(event.money);
+    moneyList.insert(0, event.money);
+    // moneyList.add(event.money);
     await updateMoney();
-    emit(MoneyLoadedState(money: modelsList));
+    emit(MoneyLoaded(money: moneyList));
   }
 
   void _editMoney(
     EditMoneyEvent event,
     Emitter<MoneyState> emit,
   ) async {
-    for (Money model in modelsList) {
-      if (identical(model, event.money)) {
-        model.title = event.money.title;
+    for (Money money in moneyList) {
+      if (identical(money.id, event.money.id)) {
+        money.title = event.money.title;
+        money.amount = event.money.amount;
+        money.category = event.money.category;
+        money.income = event.money.income;
       }
     }
     await updateMoney();
-    emit(MoneyLoadedState(money: modelsList));
+    emit(MoneyLoaded(money: moneyList));
   }
 
   void _deleteMoney(
     DeleteMoneyEvent event,
     Emitter<MoneyState> emit,
   ) async {
-    modelsList.removeWhere((money) => identical(money, event.money));
+    moneyList.removeWhere((money) => identical(money.id, event.money.id));
     await updateMoney();
-    emit(MoneyLoadedState(money: modelsList));
+    emit(MoneyLoaded(money: moneyList));
   }
 }

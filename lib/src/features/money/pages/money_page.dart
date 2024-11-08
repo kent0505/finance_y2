@@ -39,6 +39,7 @@ class _MoneyPageState extends State<MoneyPage> {
   void onIncome(bool value) {
     if (value == income) return;
     income = value;
+    controller3.clear();
     checkButtonActive();
   }
 
@@ -105,6 +106,7 @@ class _MoneyPageState extends State<MoneyPage> {
   void initState() {
     super.initState();
     if (!widget.extra.add) {
+      income = widget.extra.money.income;
       controller1.text = widget.extra.money.title;
       controller2.text = widget.extra.money.amount.toString();
       controller3.text = widget.extra.money.category;
@@ -125,7 +127,10 @@ class _MoneyPageState extends State<MoneyPage> {
     return CustomScaffold(
       body: Column(
         children: [
-          const CustomAppbar(),
+          CustomAppbar(
+            widget.extra.add ? 'New' : 'Edit',
+            onDelete: widget.extra.add ? null : onDelete,
+          ),
           const SizedBox(height: 12),
           BlocBuilder<ButtonBloc, ButtonState>(
             builder: (context, state) {

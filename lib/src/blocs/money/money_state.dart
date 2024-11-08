@@ -5,8 +5,10 @@ sealed class MoneyState {}
 
 final class MoneyInitial extends MoneyState {}
 
-final class MoneyLoadedState extends MoneyState {
-  MoneyLoadedState({required this.money});
+final class MoneyLoading extends MoneyState {}
+
+final class MoneyLoaded extends MoneyState {
+  MoneyLoaded({required this.money});
 
   final List<Money> money;
 }
