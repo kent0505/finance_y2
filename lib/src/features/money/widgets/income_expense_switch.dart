@@ -18,7 +18,7 @@ class IncomeExpenseSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 66,
-      width: 340,
+      width: 350,
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(65),
@@ -28,7 +28,7 @@ class IncomeExpenseSwitch extends StatelessWidget {
           AnimatedPositioned(
             duration: const Duration(milliseconds: 300),
             top: 7,
-            right: income ? 160 : 10,
+            right: income ? 170 : 10,
             child: Container(
               height: 52,
               width: 172,

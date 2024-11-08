@@ -22,7 +22,6 @@ class MoneyCard extends StatelessWidget {
     return Center(
       child: Container(
         height: 40,
-        width: 300,
         margin: const EdgeInsets.only(bottom: 20),
         decoration: BoxDecoration(
           color: const Color(0xff818181),

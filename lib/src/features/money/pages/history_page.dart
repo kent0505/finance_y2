@@ -26,7 +26,10 @@ class HistoryPage extends StatelessWidget {
                 builder: (context, state) {
                   if (state is MoneyLoaded) {
                     return ListView.builder(
-                      padding: const EdgeInsets.symmetric(vertical: 25),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 25,
+                        horizontal: 44,
+                      ),
                       itemCount: state.money.length,
                       itemBuilder: (context, index) {
                         return MoneyCard(money: state.money[index]);

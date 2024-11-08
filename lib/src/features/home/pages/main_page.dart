@@ -1,36 +1,31 @@
-import 'package:finance_y2/src/core/utils.dart';
-import 'package:finance_y2/src/core/widgets/buttons/cuper_button.dart';
-import 'package:finance_y2/src/core/widgets/others/svg_widget.dart';
-import 'package:finance_y2/src/core/widgets/texts/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../blocs/money/money_bloc.dart';
 import '../../../core/config/app_colors.dart';
+import '../../../core/utils.dart';
+import '../../../core/widgets/buttons/cuper_button.dart';
 import '../../../core/widgets/others/loading_widget.dart';
+import '../../../core/widgets/others/svg_widget.dart';
+import '../../../core/widgets/texts/text_widget.dart';
 import '../widgets/money_card.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
-  @override
-  State<MainPage> createState() => MainPageState();
-}
-
-class MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(
           height: 320,
-          width: 300,
           child: Column(
             children: [
               SizedBox(height: 20 + getStatusBar(context)),
               Row(
                 children: [
+                  const SizedBox(width: 44),
                   const TextWidget(
                     'Total Balance',
                     fontSize: 16,
@@ -52,6 +47,7 @@ class MainPageState extends State<MainPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 44),
                 ],
               ),
               const SizedBox(height: 17),
@@ -59,6 +55,7 @@ class MainPageState extends State<MainPage> {
                 builder: (context, state) {
                   return Row(
                     children: [
+                      const SizedBox(width: 44),
                       TextWidget(
                         '\$${formatNumber(totalIncomes - totalExpenses)}',
                         fontSize: 40,
@@ -73,6 +70,7 @@ class MainPageState extends State<MainPage> {
                 builder: (context, state) {
                   return Row(
                     children: [
+                      const SizedBox(width: 44),
                       const SvgWidget('assets/grow.svg'),
                       const SizedBox(width: 6),
                       TextWidget(
@@ -98,7 +96,9 @@ class MainPageState extends State<MainPage> {
           child: Container(
             decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(30),
+              ),
             ),
             child: BlocBuilder<MoneyBloc, MoneyState>(
               builder: (context, state) {
@@ -108,18 +108,13 @@ class MainPageState extends State<MainPage> {
 
                 if (state is MoneyLoaded) {
                   return ListView(
-                    padding: EdgeInsets.zero,
+                    padding: const EdgeInsets.symmetric(horizontal: 44),
                     children: [
                       const SizedBox(height: 14),
-                      const Center(
-                        child: SizedBox(
-                          width: 300,
-                          child: TextWidget(
-                            'Activities',
-                            fontSize: 16,
-                            fontFamily: Fonts.bold,
-                          ),
-                        ),
+                      const TextWidget(
+                        'Activities',
+                        fontSize: 16,
+                        fontFamily: Fonts.bold,
                       ),
                       const SizedBox(height: 5),
                       ...List.generate(
