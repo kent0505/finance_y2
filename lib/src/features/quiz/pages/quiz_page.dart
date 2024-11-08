@@ -10,6 +10,7 @@ import '../../../core/widgets/buttons/primary_button.dart';
 import '../../../core/widgets/texts/text_widget.dart';
 import '../widgets/answer_card.dart';
 import '../widgets/correct_count_dialog.dart';
+import '../widgets/question_indicator.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -103,6 +104,8 @@ class _QuizPageState extends State<QuizPage> {
             color: Colors.black,
           ),
         ),
+        const SizedBox(height: 10),
+        QuestionIndicator(index: index),
         const Spacer(),
         SizedBox(
           height: 200,

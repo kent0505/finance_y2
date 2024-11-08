@@ -7,6 +7,7 @@ import '../../../core/config/app_colors.dart';
 import '../../../core/utils.dart';
 import '../../../core/widgets/buttons/cuper_button.dart';
 import '../../../core/widgets/others/loading_widget.dart';
+import '../../../core/widgets/others/no_data.dart';
 import '../../../core/widgets/others/svg_widget.dart';
 import '../../../core/widgets/texts/text_widget.dart';
 import '../widgets/money_card.dart';
@@ -107,6 +108,8 @@ class MainPage extends StatelessWidget {
                 }
 
                 if (state is MoneyLoaded) {
+                  if (state.money.isEmpty) return const NoData();
+
                   return ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 44),
                     children: [
