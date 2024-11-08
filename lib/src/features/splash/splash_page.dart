@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../blocs/money/money_bloc.dart';
 import '../../core/db/db.dart';
 import '../../core/db/prefs.dart';
 import '../../core/widgets/others/loading_widget.dart';
@@ -21,6 +23,8 @@ class _SplashPageState extends State<SplashPage> {
       setState(() {
         loading = true;
       });
+
+      if (mounted) context.read<MoneyBloc>().add(GetMoneyEvent());
 
       Future.delayed(const Duration(seconds: 2), () {
         if (mounted) {

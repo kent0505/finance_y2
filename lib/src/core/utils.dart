@@ -8,10 +8,10 @@ int getCurrentTimestamp() {
 }
 
 String timestampToString(int timestamp) {
-  // timestamp to 22.06.2000
+  // timestamp to Aug 26, 2024
   try {
     DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-    return DateFormat('dd.MM.yyyy').format(date);
+    return DateFormat('MMM d, y').format(date);
   } catch (e) {
     return 'Error';
   }
@@ -84,4 +84,21 @@ void precacheImages(BuildContext context) {
   } catch (e) {
     logger(e);
   }
+}
+
+String getCatSvg(String cat) {
+  if (cat == 'Investment') return 'assets/cat1.svg';
+  if (cat == 'Food') return 'assets/cat2.svg';
+  if (cat == 'Transport') return 'assets/cat3.svg';
+  if (cat == 'Procurement') return 'assets/cat4.svg';
+  if (cat == 'Rest') return 'assets/cat5.svg';
+  if (cat == 'Passive') return 'assets/cat6.svg';
+  if (cat == 'Salary') return 'assets/cat7.svg';
+  if (cat == 'Rent') return 'assets/cat3.svg';
+  if (cat == 'Business') return 'assets/cat8.svg';
+  if (cat == 'Freelance') return 'assets/cat9.svg';
+  if (cat == 'Investment ') return 'assets/cat10.svg';
+  if (cat == 'Dividends') return 'assets/cat11.svg';
+  if (cat == 'Royalty') return 'assets/cat12.svg';
+  return 'assets/cat1.svg';
 }

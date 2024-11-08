@@ -47,10 +47,10 @@ class _QuizPageState extends State<QuizPage> {
   void onAnswerButton() async {
     buttonActive = false;
     if (selectedAnswer.isCorrect) {
-      selectedAnswer.color = Colors.greenAccent;
+      selectedAnswer.color = const Color(0xff00FF88);
       correctAnswers++;
     } else {
-      selectedAnswer.color = Colors.redAccent;
+      selectedAnswer.color = const Color(0xffFF0000);
     }
     context.read<ButtonBloc>().add(CheckButtonActive(controllers: const ['']));
     await Future.delayed(
@@ -164,7 +164,6 @@ class _QuizPageState extends State<QuizPage> {
         const Spacer(),
         PrimaryButton(
           title: 'Answer',
-          width: 340,
           onPressed: onAnswerButton,
         ),
         const SizedBox(height: 120),
