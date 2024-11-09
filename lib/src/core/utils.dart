@@ -204,3 +204,23 @@ String comparePreviousMonthIncomes() {
   final total = ((netIncome1 - netIncome2) / netIncome2) * 100;
   return '${total.toStringAsFixed(2)}%';
 }
+
+String getCurrentMonth(int id) {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+
+  DateTime now = DateTime.now();
+  return monthNames[now.month - id];
+}

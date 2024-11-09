@@ -6,6 +6,7 @@ import '../../../blocs/money/money_bloc.dart';
 import '../../../core/config/app_colors.dart';
 import '../../../core/utils.dart';
 import '../../../core/widgets/buttons/cuper_button.dart';
+import '../../../core/widgets/others/bar_chart.dart';
 import '../../../core/widgets/others/loading_widget.dart';
 import '../../../core/widgets/others/no_data.dart';
 import '../../../core/widgets/others/svg_widget.dart';
@@ -90,6 +91,22 @@ class MainPage extends StatelessWidget {
                   );
                 },
               ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BarChart(month: getCurrentMonth(5), height: 20),
+                  const SizedBox(width: 33),
+                  BarChart(month: getCurrentMonth(4), height: 50),
+                  const SizedBox(width: 33),
+                  BarChart(month: getCurrentMonth(3), height: 60),
+                  const SizedBox(width: 33),
+                  BarChart(month: getCurrentMonth(2), height: 10),
+                  const SizedBox(width: 33),
+                  BarChart(month: getCurrentMonth(1), height: 70),
+                ],
+              ),
+              const Spacer(),
             ],
           ),
         ),
