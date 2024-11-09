@@ -145,7 +145,9 @@ class _MoneyPageState extends State<MoneyPage> {
             child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30),
+                ),
               ),
               child: ListView(
                 padding: const EdgeInsets.symmetric(vertical: 30),
