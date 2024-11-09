@@ -20,6 +20,19 @@ class ActivitiesPage extends StatelessWidget {
             color: Colors.black,
           ),
         ),
+        const SizedBox(height: 12),
+        const SizedBox(height: 66), // switch
+        const SizedBox(height: 12),
+        Expanded(
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(30),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
