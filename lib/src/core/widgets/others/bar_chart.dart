@@ -70,13 +70,15 @@ class _Bar extends StatelessWidget {
                 width: 1000,
                 child: Column(
                   children: [
-                    const _Line(top: 1),
-                    ...List.generate(
-                      (height / 2).toInt() - 1,
-                      (index) {
-                        return const _Line();
-                      },
-                    ),
+                    if (height >= 2) ...[
+                      const _Line(top: 1),
+                      ...List.generate(
+                        (height / 2).toInt() - 1,
+                        (index) {
+                          return const _Line();
+                        },
+                      ),
+                    ]
                   ],
                 ),
               ),

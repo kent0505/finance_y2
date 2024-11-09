@@ -20,51 +20,12 @@ String timestampToString(int timestamp) {
   }
 }
 
-String dateToString(DateTime date) {
-  // DateTime to 22.06.2000
-  try {
-    return DateFormat('dd.MM.yyyy').format(date);
-  } catch (e) {
-    return 'Error';
-  }
-}
-
-String timeToString(DateTime time) {
-  // DateTime to 22:00
-  try {
-    return DateFormat('HH:mm').format(time);
-  } catch (e) {
-    return 'Error';
-  }
-}
-
-DateTime stringToDate(String date) {
-  // 22.06.2000 to DateTime
-  try {
-    return DateFormat('dd.MM.yyyy').parse(date);
-  } catch (e) {
-    return DateTime.now();
-  }
-}
-
 String formatNumber(int number) {
   return NumberFormat('#,###').format(number);
 }
 
 double getStatusBar(BuildContext context) {
   return MediaQuery.of(context).viewPadding.top;
-}
-
-double getBottom(BuildContext context) {
-  return MediaQuery.of(context).viewPadding.bottom;
-}
-
-double getWidth(BuildContext context) {
-  return MediaQuery.of(context).size.width;
-}
-
-double getHeight(BuildContext context) {
-  return MediaQuery.of(context).size.height;
 }
 
 void logger(Object message) {
@@ -113,57 +74,9 @@ void calculateMoney() {
   totalIncomes = 0;
   totalExpenses = 0;
   for (Money money in moneyList) {
-    if (money.income) {
-      totalIncomes += money.amount;
-    } else {
-      totalExpenses += money.amount;
-    }
+    money.income ? totalIncomes += money.amount : totalExpenses += money.amount;
   }
 }
-
-String getPreviousMonthName() {
-  DateTime now = DateTime.now();
-  DateTime previousMonth = DateTime(now.year, now.month - 1);
-  return DateFormat('MMMM').format(previousMonth);
-}
-
-// double comparePreviousMonthIncomes() {
-//   List<Money> currentMonthList = [];
-//   List<Money> lastMonthList = [];
-//   DateTime now = DateTime.now();
-//   int incomes1 = 0;
-//   int expenses1 = 0;
-//   int incomes2 = 0;
-//   int expenses2 = 0;
-
-//   for (Money money in moneyList) {
-//     DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
-//     if (date.month == now.month) currentMonthList.add(money);
-//     if (date.month - 1 == now.month - 1) lastMonthList.add(money);
-//   }
-
-//   for (Money money in currentMonthList) {
-//     if (money.income) {
-//       incomes1 += money.amount;
-//     } else {
-//       expenses1 += money.amount;
-//     }
-//   }
-
-//   for (Money money in lastMonthList) {
-//     if (money.income) {
-//       incomes2 += money.amount;
-//     } else {
-//       expenses2 += money.amount;
-//     }
-//   }
-
-//   if (incomes2 - expenses2 == 0) {
-//     return 0;
-//   } else {
-//     return (incomes1 - expenses1 / incomes2 - expenses2) * 100;
-//   }
-// }
 
 String comparePreviousMonthIncomes() {
   List<Money> currentMonthList = [];
@@ -173,7 +86,6 @@ String comparePreviousMonthIncomes() {
   int expenses1 = 0;
   int incomes2 = 0;
   int expenses2 = 0;
-
   for (Money money in moneyList) {
     DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
     if (date.month == now.month && date.year == now.year) {
@@ -185,18 +97,10 @@ String comparePreviousMonthIncomes() {
     }
   }
   for (Money money in currentMonthList) {
-    if (money.income) {
-      incomes1 += money.amount;
-    } else {
-      expenses1 += money.amount;
-    }
+    money.income ? incomes1 += money.amount : expenses1 += money.amount;
   }
   for (Money money in lastMonthList) {
-    if (money.income) {
-      incomes2 += money.amount;
-    } else {
-      expenses2 += money.amount;
-    }
+    money.income ? incomes2 += money.amount : expenses2 += money.amount;
   }
   int netIncome1 = incomes1 - expenses1;
   int netIncome2 = incomes2 - expenses2;
@@ -205,7 +109,13 @@ String comparePreviousMonthIncomes() {
   return '${total.toStringAsFixed(2)}%';
 }
 
-String getCurrentMonth(int id) {
+String getPreviousMonthName() {
+  DateTime now = DateTime.now();
+  DateTime previousMonth = DateTime(now.year, now.month - 1);
+  return DateFormat('MMMM').format(previousMonth);
+}
+
+String getMonthName(int id) {
   const monthNames = [
     "Jan",
     "Feb",
@@ -220,7 +130,37 @@ String getCurrentMonth(int id) {
     "Nov",
     "Dec"
   ];
-
   DateTime now = DateTime.now();
   return monthNames[now.month - id];
+}
+
+double getMonthIncome(int id) {
+  List<Money> sortedList = [];
+  DateTime now = DateTime.now();
+  int incomes = 0;
+  int expenses = 0;
+  for (Money money in moneyList) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
+    if (date.month == now.month - id && date.year == now.year) {
+      sortedList.add(money);
+    }
+  }
+  for (Money money in sortedList) {
+    money.income ? incomes += money.amount : expenses += money.amount;
+  }
+  return (incomes - expenses).toDouble();
+}
+
+List<double> normalizeToMax70() {
+  List<double> values = [
+    getMonthIncome(0),
+    getMonthIncome(1),
+    getMonthIncome(2),
+    getMonthIncome(3),
+    getMonthIncome(4),
+  ];
+  double maxValue = values.reduce((a, b) => a > b ? a : b);
+  if (maxValue == 0) return List.filled(values.length, 0);
+  double scale = 70 / maxValue;
+  return values.map((value) => (value * scale)).toList();
 }

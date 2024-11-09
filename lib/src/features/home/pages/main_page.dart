@@ -92,19 +92,38 @@ class MainPage extends StatelessWidget {
                 },
               ),
               const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  BarChart(month: getCurrentMonth(5), height: 20),
-                  const SizedBox(width: 33),
-                  BarChart(month: getCurrentMonth(4), height: 50),
-                  const SizedBox(width: 33),
-                  BarChart(month: getCurrentMonth(3), height: 60),
-                  const SizedBox(width: 33),
-                  BarChart(month: getCurrentMonth(2), height: 10),
-                  const SizedBox(width: 33),
-                  BarChart(month: getCurrentMonth(1), height: 70),
-                ],
+              BlocBuilder<MoneyBloc, MoneyState>(
+                builder: (context, state) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BarChart(
+                        month: getMonthName(5),
+                        height: normalizeToMax70()[4],
+                      ),
+                      const SizedBox(width: 33),
+                      BarChart(
+                        month: getMonthName(4),
+                        height: normalizeToMax70()[3],
+                      ),
+                      const SizedBox(width: 33),
+                      BarChart(
+                        month: getMonthName(3),
+                        height: normalizeToMax70()[2],
+                      ),
+                      const SizedBox(width: 33),
+                      BarChart(
+                        month: getMonthName(2),
+                        height: normalizeToMax70()[1],
+                      ),
+                      const SizedBox(width: 33),
+                      BarChart(
+                        month: getMonthName(1),
+                        height: normalizeToMax70()[0],
+                      ),
+                    ],
+                  );
+                },
               ),
               const Spacer(),
             ],
