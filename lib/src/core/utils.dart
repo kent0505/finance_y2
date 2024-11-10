@@ -134,33 +134,100 @@ String getMonthName(int id) {
   return monthNames[now.month - id];
 }
 
-double getMonthIncome(int id) {
-  List<Money> sortedList = [];
+DateTime getDayNumber(int id) {
   DateTime now = DateTime.now();
+  if (id >= now.day) {
+    DateTime lastDayOfPreviousMonth = DateTime(now.year, now.month, 0);
+    int previousMonthDays = lastDayOfPreviousMonth.day;
+    int day = previousMonthDays - (id - now.day);
+    return DateTime(now.year, now.month - 1, day);
+  } else {
+    return DateTime(now.year, now.month, now.day - id);
+  }
+}
+
+DateTime getMonth(int id) {
+  DateTime now = DateTime.now();
+  return DateTime(now.year, now.month - id, now.day);
+}
+
+int getDayIncomeExpense(bool isIncome, int id) {
+  DateTime targetDate = getDayNumber(id);
   int incomes = 0;
   int expenses = 0;
   for (Money money in moneyList) {
     DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
-    if (date.month == now.month - id && date.year == now.year) {
-      sortedList.add(money);
+    if (date.month == targetDate.month && date.day == targetDate.day) {
+      money.income ? incomes += money.amount : expenses += money.amount;
     }
   }
-  for (Money money in sortedList) {
-    money.income ? incomes += money.amount : expenses += money.amount;
+  return isIncome ? incomes : expenses;
+}
+
+int getMonthIncomeExpense(bool isIncome, int id) {
+  DateTime targetMonth = getMonth(id);
+  int incomes = 0;
+  int expenses = 0;
+  for (Money money in moneyList) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
+    if (date.month == targetMonth.month && date.year == targetMonth.year) {
+      money.income ? incomes += money.amount : expenses += money.amount;
+    }
+  }
+  return isIncome ? incomes : expenses;
+}
+
+int getTotalDayIncomeExpense(bool isIncome) {
+  return List.generate(5, (index) {
+    return getDayIncomeExpense(isIncome, index);
+  }).reduce((a, b) => a + b);
+}
+
+int getTotalMonthIncomeExpense(bool isIncome) {
+  return List.generate(5, (index) {
+    return getMonthIncomeExpense(isIncome, index);
+  }).reduce((a, b) => a + b);
+}
+
+List<double> normalizeValues(List<double> values) {
+  double maxValue = values.reduce((a, b) => a > b ? a : b);
+  if (maxValue == 0) return List.filled(values.length, 0);
+  double scale = 70 / maxValue;
+  return values.map((value) => value * scale).toList();
+}
+
+List<double> normalizeDay(bool isIncome) {
+  List<double> values = [
+    for (int i = 0; i < 5; i++) getDayIncomeExpense(isIncome, i).toDouble()
+  ];
+  return normalizeValues(values);
+}
+
+List<double> normalizeMonth(bool isIncome) {
+  List<double> values = [
+    for (int i = 0; i < 5; i++) getMonthIncomeExpense(isIncome, i).toDouble()
+  ];
+  return normalizeValues(values);
+}
+
+double getMonthIncome(int id) {
+  DateTime now = DateTime.now();
+  DateTime targetMonth = DateTime(now.year, now.month - id);
+  int incomes = 0;
+  int expenses = 0;
+  for (Money money in moneyList) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
+    if (date.month == targetMonth.month && date.year == targetMonth.year) {
+      money.income ? incomes += money.amount : expenses += money.amount;
+    }
   }
   return (incomes - expenses).toDouble();
 }
 
 List<double> normalizeToMax70() {
-  List<double> values = [
-    getMonthIncome(0),
-    getMonthIncome(1),
-    getMonthIncome(2),
-    getMonthIncome(3),
-    getMonthIncome(4),
-  ];
-  double maxValue = values.reduce((a, b) => a > b ? a : b);
+  List<double> values = [for (int i = 0; i < 5; i++) getMonthIncome(i)];
+  double maxValue =
+      values.isNotEmpty ? values.reduce((a, b) => a > b ? a : b) : 0;
   if (maxValue == 0) return List.filled(values.length, 0);
-  double scale = 70 / maxValue;
-  return values.map((value) => (value * scale)).toList();
+  return values.map((value) => (value / maxValue) * 70).toList();
 }

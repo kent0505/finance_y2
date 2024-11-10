@@ -1,5 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../utils.dart';
+
 @HiveType(typeId: 0)
 class Money {
   @HiveField(0)
@@ -54,3 +56,48 @@ final defaultMoney = Money(
   category: '',
   income: true,
 );
+
+List<Money> testMoneyList = [
+  Money(
+    id: getCurrentTimestamp(),
+    title: 'Aaa',
+    amount: 200,
+    category: 'Food',
+    income: false,
+  ),
+  Money(
+    id: getCurrentTimestamp(),
+    title: 'Bbb',
+    amount: 350,
+    category: 'Passive',
+    income: true,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 2700000, // last month
+    title: 'Ccc',
+    amount: 400,
+    category: 'Food',
+    income: false,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 2700000, // last month
+    title: 'Ddd',
+    amount: 600,
+    category: 'Food',
+    income: true,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 2700000 * 2, // 2 month ago
+    title: 'Ccc',
+    amount: 200,
+    category: 'Food',
+    income: false,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 2700000 * 2, // 2 month ago
+    title: 'Ddd',
+    amount: 300,
+    category: 'Food',
+    income: true,
+  ),
+];

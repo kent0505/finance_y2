@@ -98,27 +98,27 @@ class MainPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BarChart(
-                        month: getMonthName(5),
+                        title: getMonthName(5),
                         height: normalizeToMax70()[4],
                       ),
                       const SizedBox(width: 33),
                       BarChart(
-                        month: getMonthName(4),
+                        title: getMonthName(4),
                         height: normalizeToMax70()[3],
                       ),
                       const SizedBox(width: 33),
                       BarChart(
-                        month: getMonthName(3),
+                        title: getMonthName(3),
                         height: normalizeToMax70()[2],
                       ),
                       const SizedBox(width: 33),
                       BarChart(
-                        month: getMonthName(2),
+                        title: getMonthName(2),
                         height: normalizeToMax70()[1],
                       ),
                       const SizedBox(width: 33),
                       BarChart(
-                        month: getMonthName(1),
+                        title: getMonthName(1),
                         height: normalizeToMax70()[0],
                       ),
                     ],

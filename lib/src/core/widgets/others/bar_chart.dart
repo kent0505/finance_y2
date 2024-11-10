@@ -7,37 +7,41 @@ import 'svg_widget.dart';
 class BarChart extends StatelessWidget {
   const BarChart({
     super.key,
-    required this.month,
+    required this.title,
     required this.height,
   });
 
-  final String month;
+  final String title;
   final double height;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.only(right: 7),
-          child: SvgWidget('assets/line.svg'),
-        ),
-        Column(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 3),
-            _Bar(height: height),
-            const SizedBox(height: 24),
-            TextWidget(
-              month,
-              fontSize: 12,
-              fontFamily: Fonts.bold,
+            const Padding(
+              padding: EdgeInsets.only(right: 7),
+              child: SvgWidget('assets/line.svg'),
+            ),
+            Column(
+              children: [
+                const SizedBox(height: 3),
+                _Bar(height: height),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 7),
+              child: SvgWidget('assets/line.svg'),
             ),
           ],
         ),
-        const Padding(
-          padding: EdgeInsets.only(left: 7),
-          child: SvgWidget('assets/line.svg'),
+        const SizedBox(height: 24),
+        TextWidget(
+          title,
+          fontSize: 12,
+          fontFamily: Fonts.bold,
         ),
       ],
     );
