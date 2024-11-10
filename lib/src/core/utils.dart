@@ -164,6 +164,22 @@ int getDayIncomeExpense(bool isIncome, int id) {
   return isIncome ? incomes : expenses;
 }
 
+int getWeekIncomeExpense(bool isIncome, int weekIndex) {
+  List<DateTime> range = getWeekRange(weekIndex);
+  DateTime startDate = range[0];
+  DateTime endDate = range[1];
+  int incomes = 0;
+  int expenses = 0;
+  for (Money money in moneyList) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
+    if (date.isAfter(startDate.subtract(const Duration(days: 1))) &&
+        date.isBefore(endDate.add(const Duration(days: 1)))) {
+      money.income ? incomes += money.amount : expenses += money.amount;
+    }
+  }
+  return isIncome ? incomes : expenses;
+}
+
 int getMonthIncomeExpense(bool isIncome, int id) {
   DateTime targetMonth = getMonth(id);
   int incomes = 0;
@@ -183,6 +199,12 @@ int getTotalDayIncomeExpense(bool isIncome) {
   }).reduce((a, b) => a + b);
 }
 
+int getTotalWeekIncomeExpense(bool isIncome) {
+  return List.generate(5, (index) {
+    return getWeekIncomeExpense(isIncome, index);
+  }).reduce((a, b) => a + b);
+}
+
 int getTotalMonthIncomeExpense(bool isIncome) {
   return List.generate(5, (index) {
     return getMonthIncomeExpense(isIncome, index);
@@ -199,6 +221,13 @@ List<double> normalizeValues(List<double> values) {
 List<double> normalizeDay(bool isIncome) {
   List<double> values = [
     for (int i = 0; i < 5; i++) getDayIncomeExpense(isIncome, i).toDouble()
+  ];
+  return normalizeValues(values);
+}
+
+List<double> normalizeWeek(bool isIncome) {
+  List<double> values = [
+    for (int i = 0; i < 4; i++) getWeekIncomeExpense(isIncome, i).toDouble()
   ];
   return normalizeValues(values);
 }
@@ -230,4 +259,15 @@ List<double> normalizeToMax70() {
       values.isNotEmpty ? values.reduce((a, b) => a > b ? a : b) : 0;
   if (maxValue == 0) return List.filled(values.length, 0);
   return values.map((value) => (value / maxValue) * 70).toList();
+}
+
+List<DateTime> getWeekRange(int weekIndex) {
+  DateTime now = DateTime.now();
+  int daysInMonth = DateTime(now.year, now.month + 1, 0).day;
+  int startDay = (weekIndex * 7) + 1;
+  int endDay = startDay + 6;
+  if (endDay > daysInMonth) endDay = daysInMonth;
+  DateTime startDate = DateTime(now.year, now.month, startDay);
+  DateTime endDate = DateTime(now.year, now.month, endDay);
+  return [startDate, endDate];
 }

@@ -30,7 +30,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
     } else if (tabIndex == 2) {
       return getTotalMonthIncomeExpense(isIncome);
     } else {
-      return 0;
+      return getTotalWeekIncomeExpense(isIncome);
     }
   }
 
@@ -117,22 +117,22 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                         ] else if (tabIndex == 1) ...[
                           BarChart(
                             title: 'Week 1',
-                            height: normalizeToMax70()[4],
+                            height: normalizeWeek(true)[0],
                           ),
                           const SizedBox(width: 33),
                           BarChart(
                             title: 'Week 2',
-                            height: normalizeToMax70()[3],
+                            height: normalizeWeek(true)[1],
                           ),
                           const SizedBox(width: 33),
                           BarChart(
                             title: 'Week 3',
-                            height: normalizeToMax70()[2],
+                            height: normalizeWeek(true)[2],
                           ),
                           const SizedBox(width: 33),
                           BarChart(
                             title: 'Week 4',
-                            height: normalizeToMax70()[1],
+                            height: normalizeWeek(true)[3],
                           ),
                         ] else ...[
                           BarChart(
@@ -217,22 +217,22 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                         ] else if (tabIndex == 1) ...[
                           BarChart(
                             title: 'Week 1',
-                            height: normalizeToMax70()[4],
+                            height: normalizeWeek(false)[0],
                           ),
                           const SizedBox(width: 33),
                           BarChart(
                             title: 'Week 2',
-                            height: normalizeToMax70()[3],
+                            height: normalizeWeek(false)[1],
                           ),
                           const SizedBox(width: 33),
                           BarChart(
                             title: 'Week 3',
-                            height: normalizeToMax70()[2],
+                            height: normalizeWeek(false)[2],
                           ),
                           const SizedBox(width: 33),
                           BarChart(
                             title: 'Week 4',
-                            height: normalizeToMax70()[1],
+                            height: normalizeWeek(false)[3],
                           ),
                         ] else ...[
                           BarChart(
