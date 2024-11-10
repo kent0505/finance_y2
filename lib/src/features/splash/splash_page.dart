@@ -16,14 +16,8 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  bool loading = false;
-
   void load() async {
     await initDB().then((_) {
-      setState(() {
-        loading = true;
-      });
-
       Future.delayed(const Duration(seconds: 2), () {
         if (mounted) {
           context.read<MoneyBloc>().add(GetMoneyEvent());

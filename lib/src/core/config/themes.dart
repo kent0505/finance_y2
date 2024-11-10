@@ -13,7 +13,7 @@ final theme = ThemeData(
     selectionHandleColor: AppColors.main,
   ),
   colorScheme: ColorScheme.fromSwatch(
-    accentColor: AppColors.main, // overscroll indicator color
+    accentColor: AppColors.main,
   ),
   dialogTheme: const DialogTheme(
     shape: RoundedRectangleBorder(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../config/app_colors.dart';
 import '../texts/text_widget.dart';
 
 class NoData extends StatelessWidget {
@@ -11,6 +12,7 @@ class NoData extends StatelessWidget {
       child: TextWidget(
         'No data',
         fontSize: 14,
+        fontFamily: Fonts.unb900,
       ),
     );
   }

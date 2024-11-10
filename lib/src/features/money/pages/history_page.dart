@@ -1,3 +1,4 @@
+import 'package:finance_y2/src/core/widgets/others/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +26,10 @@ class HistoryPage extends StatelessWidget {
               child: BlocBuilder<MoneyBloc, MoneyState>(
                 builder: (context, state) {
                   if (state is MoneyLoaded) {
+                    if (state.money.isEmpty) {
+                      return const NoData();
+                    }
+
                     return ListView.builder(
                       padding: const EdgeInsets.symmetric(
                         vertical: 25,

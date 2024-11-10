@@ -20,6 +20,7 @@ class CorrectCountDialog extends StatelessWidget {
       backgroundColor: AppColors.main,
       child: SizedBox(
         height: 150,
+        width: 300,
         child: Column(
           children: [
             const SizedBox(height: 20),

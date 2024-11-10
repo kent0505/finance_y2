@@ -14,7 +14,6 @@ class PrimaryButton extends StatelessWidget {
   });
 
   final String title;
-
   final void Function() onPressed;
 
   @override
